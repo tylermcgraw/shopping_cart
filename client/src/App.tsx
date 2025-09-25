@@ -37,12 +37,12 @@ function App() {
     <div id="app">
       <header>
         <h1>The Shop!</h1>
-        <ShoppingCart cartItems={cart} fetchCartItems={fetchCartItems}/>
+        <ShoppingCart cartItems={cart} setCart={setCart}/>
       </header>
 
       <main>
-        <ProductList products={productList} fetchProductList={fetchProductList} fetchCartItems={fetchCartItems}/>
-        <ToggleableAddProductForm fetchProductList={fetchProductList}/>
+        <ProductList products={productList} setProductList={setProductList} setCart={setCart}/>
+        <ToggleableAddProductForm setProductList={setProductList}/>
       </main>
     </div>
   )
