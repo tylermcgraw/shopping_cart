@@ -7,8 +7,12 @@ const addCartItemResponseSchema = z.object({
   item: cartItemSchema
 })
 
+const productArraySchema = z.array(productSchema);
+const cartItemArraySchema = z.array(cartItemSchema);
+
 export const getProducts = async () => {
-  return await axios.get("/api/products");
+  const { data } = await axios.get("/api/products");
+  return productArraySchema.parse(data);
 }
 
 export const addProduct = async (product: NewProduct) => {
@@ -26,7 +30,8 @@ export const deleteProduct = async (id: string) => {
 }
 
 export const getCartItems = async () => {
-  return await axios.get("/api/cart");
+  const { data } = await axios.get("/api/cart");
+  return cartItemArraySchema.parse(data);
 }
 
 export const checkout = async () => {

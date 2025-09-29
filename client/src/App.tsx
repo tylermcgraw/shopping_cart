@@ -17,8 +17,8 @@ function App() {
 
   const fetchProductList = async (): Promise<void> => {
     try {
-      const {data} = await getProducts();
-      setProductList(data);
+      const products = await getProducts();
+      setProductList(products);
     } catch (error: unknown) {
       console.log(error);
     }
@@ -26,8 +26,8 @@ function App() {
 
   const fetchCartItems = async (): Promise<void> => {
     try {
-      const {data} = await getCartItems();
-      setCart(data);
+      const cartItems = await getCartItems();
+      setCart(cartItems);
     } catch (error: unknown) {
       console.log(error);
     }

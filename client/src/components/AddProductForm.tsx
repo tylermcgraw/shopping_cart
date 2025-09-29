@@ -23,7 +23,8 @@ const AddProductForm = ({setIsClickedAddForm, setProductList}: AddProductFormPro
       setValues(emptyProduct);
       setProductList(previousProductList => {
         return previousProductList.concat(newProduct);
-      })
+      });
+      setIsClickedAddForm(false);
     } catch (error: unknown) {
       console.log(error)
     } 
