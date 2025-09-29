@@ -5,16 +5,16 @@ import EditProductButton from "./EditProductButton";
 
 interface ProductProps {
   product: ProductType;
-  setProductList: React.Dispatch<React.SetStateAction<ProductType[]>>;
+  dispatchProductList: React.ActionDispatch<[action: { type: string; product?: ProductType, productList?: ProductType[], deletedId?: string}]>;
 }
 
-const ToggleableEditForm = ({product, setProductList}: ProductProps) => {
+const ToggleableEditForm = ({product, dispatchProductList}: ProductProps) => {
   const [isClickedEditForm, setIsClickedEditForm] = React.useState<boolean>(false);
   
   return (
     <>
       {isClickedEditForm
-      ? <EditProductForm product={product} setIsClickedEditForm={setIsClickedEditForm} setProductList={setProductList}/>
+      ? <EditProductForm product={product} setIsClickedEditForm={setIsClickedEditForm} dispatchProductList={dispatchProductList}/>
       : <EditProductButton setIsClickedEditForm={setIsClickedEditForm} />
       }
     </>

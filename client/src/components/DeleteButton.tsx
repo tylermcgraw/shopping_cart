@@ -3,15 +3,16 @@ import type {Product} from "../types/"
 
 interface DeleteButtonProps {
   id: string;
-  setProductList: React.Dispatch<React.SetStateAction<Product[]>>;
+  dispatchProductList: React.ActionDispatch<[action: { type: string; product?: Product, productList?: Product[], deletedId?: string}]>;
 }
 
-const DeleteButton = ({id, setProductList}: DeleteButtonProps) => {
+const DeleteButton = ({id, dispatchProductList}: DeleteButtonProps) => {
   const handleClick = async () => {
     try {
       await deleteProduct(id);
-      setProductList(previousProducts => {
-        return previousProducts.filter(previousProduct => previousProduct._id !== id);
+      dispatchProductList({
+        type: "delete product",
+        deletedId: id
       });
     } catch (error: unknown) {
       console.log(error);

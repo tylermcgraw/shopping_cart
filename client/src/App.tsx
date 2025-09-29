@@ -1,14 +1,15 @@
 import React from "react";
 import './App.css';
-import type { Product, CartItem } from "./types";
 import ShoppingCart from './components/ShoppingCart';
 import ProductList from "./components/ProductList";
 import ToggleableAddProductForm from "./components/ToggleableAddProductForm";
 import { getCartItems, getProducts } from "./services/cart";
+import cartReducer from "./reducers/cartReducer";
+import productListReducer from "./reducers/productListReducer";
 
 function App() {
-  const [cart, setCart] = React.useState<CartItem[]>([]);
-  const [productList, setProductList] = React.useState<Product[]>([]);
+  const [cart, dispatchCart] = React.useReducer(cartReducer, []);
+  const [productList, dispatchProductList] = React.useReducer(productListReducer, []);
 
   React.useEffect(() => {
     fetchProductList();
@@ -17,8 +18,11 @@ function App() {
 
   const fetchProductList = async (): Promise<void> => {
     try {
-      const products = await getProducts();
-      setProductList(products);
+      const productList = await getProducts();
+      dispatchProductList({
+        type: "fetch product list",
+        productList: productList
+      });
     } catch (error: unknown) {
       console.log(error);
     }
@@ -27,7 +31,10 @@ function App() {
   const fetchCartItems = async (): Promise<void> => {
     try {
       const cartItems = await getCartItems();
-      setCart(cartItems);
+      dispatchCart({
+        type: "fetch cart",
+        cartItems: cartItems
+      });
     } catch (error: unknown) {
       console.log(error);
     }
@@ -37,12 +44,12 @@ function App() {
     <div id="app">
       <header>
         <h1>The Shop!</h1>
-        <ShoppingCart cartItems={cart} setCart={setCart}/>
+        <ShoppingCart cartItems={cart} dispatchCart={dispatchCart}/>
       </header>
 
       <main>
-        <ProductList products={productList} setProductList={setProductList} setCart={setCart}/>
-        <ToggleableAddProductForm setProductList={setProductList}/>
+        <ProductList products={productList} dispatchProductList={dispatchProductList} dispatchCart={dispatchCart}/>
+        <ToggleableAddProductForm dispatchProductList={dispatchProductList}/>
       </main>
     </div>
   )

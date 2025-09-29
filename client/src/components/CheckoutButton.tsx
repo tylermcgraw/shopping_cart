@@ -3,14 +3,14 @@ import type {CartItem} from "../types";
 
 interface CheckoutButtonProps {
   cartItemsLength: number;
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  dispatchCart: React.ActionDispatch<[action: { type: string; cartItem?: CartItem}]>;
 }
 
-const CheckoutButton = ({cartItemsLength, setCart}: CheckoutButtonProps) => {
+const CheckoutButton = ({cartItemsLength, dispatchCart}: CheckoutButtonProps) => {
   const handleClick = async () => {
     try {
       await checkout();
-      setCart([]);
+      dispatchCart({ type: "checkout" });
     } catch (error: unknown) {
       console.log(error);
     }

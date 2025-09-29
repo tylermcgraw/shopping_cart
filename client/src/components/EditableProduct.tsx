@@ -6,19 +6,19 @@ import DeleteButton from "./DeleteButton";
 
 interface ProductsProps {
   product: ProductType;
-  setProductList: React.Dispatch<React.SetStateAction<ProductType[]>>;
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  dispatchProductList: React.ActionDispatch<[action: { type: string; product?: ProductType, productList?: ProductType[], deletedId?: string}]>;
+  dispatchCart: React.ActionDispatch<[action: { type: string; cartItem?: CartItem}]>;
 }
 
-const EditableProduct = ({product, setProductList, setCart}: ProductsProps) => {
+const EditableProduct = ({product, dispatchProductList, dispatchCart}: ProductsProps) => {
   return (
     <div className="product-details">
       <Product product={product}/>
       <div className="actions product-actions">
-        <AddToCartButton newProduct={product} setProductList={setProductList} setCart={setCart}/>
-        <ToggleableEditForm product={product} setProductList={setProductList}/>
+        <AddToCartButton newProduct={product} dispatchProductList={dispatchProductList} dispatchCart={dispatchCart}/>
+        <ToggleableEditForm product={product} dispatchProductList={dispatchProductList}/>
       </div>
-      <DeleteButton id={product._id} setProductList={setProductList}/>
+      <DeleteButton id={product._id} dispatchProductList={dispatchProductList}/>
     </div>
   );
 }

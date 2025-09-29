@@ -3,10 +3,10 @@ import CheckoutButton from "./CheckoutButton";
 
 interface ShoppingCartProps {
   cartItems: CartItem[];
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  dispatchCart: React.ActionDispatch<[action: { type: string; cartItem?: CartItem}]>;
 }
 
-const ShoppingCart = ({cartItems, setCart}: ShoppingCartProps) => {
+const ShoppingCart = ({cartItems, dispatchCart}: ShoppingCartProps) => {
   return (
     <div className="cart">
       <h2>Your Cart</h2>
@@ -40,7 +40,7 @@ const ShoppingCart = ({cartItems, setCart}: ShoppingCartProps) => {
         </tfoot>
       </table>
       </>)}
-      <CheckoutButton cartItemsLength={cartItems.length} setCart={setCart}/>
+      <CheckoutButton cartItemsLength={cartItems.length} dispatchCart={dispatchCart}/>
     </div>
   );
 }

@@ -4,11 +4,11 @@ import { addProduct } from "../services/cart";
 
 interface AddProductFormProps {
   setIsClickedAddForm: React.Dispatch<React.SetStateAction<boolean>>;
-  setProductList: React.Dispatch<React.SetStateAction<Product[]>>;
+  dispatchProductList: React.ActionDispatch<[action: { type: string; product?: Product, productList?: Product[], deletedId?: string}]>;
 }
 
 
-const AddProductForm = ({setIsClickedAddForm, setProductList}: AddProductFormProps) => {
+const AddProductForm = ({setIsClickedAddForm, dispatchProductList}: AddProductFormProps) => {
   const emptyProduct = {
     title: "",
     quantity: -1,
@@ -21,8 +21,9 @@ const AddProductForm = ({setIsClickedAddForm, setProductList}: AddProductFormPro
     try {
       const newProduct = await addProduct(values);
       setValues(emptyProduct);
-      setProductList(previousProductList => {
-        return previousProductList.concat(newProduct);
+      dispatchProductList({
+        type: "add product",
+        product: newProduct
       });
       setIsClickedAddForm(false);
     } catch (error: unknown) {

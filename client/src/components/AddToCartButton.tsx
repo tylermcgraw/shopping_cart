@@ -3,31 +3,21 @@ import type {Product, CartItem} from "../types";
 
 interface AddToCartButtonProps {
   newProduct: Product;
-  setProductList: React.Dispatch<React.SetStateAction<Product[]>>;
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  dispatchProductList: React.ActionDispatch<[action: { type: string; product?: Product, productList?: Product[], deletedId?: string}]>;
+  dispatchCart: React.ActionDispatch<[action: { type: string; cartItem?: CartItem}]>;
 }
 
-const AddToCartButton = ({newProduct, setProductList, setCart}: AddToCartButtonProps) => {
+const AddToCartButton = ({newProduct, dispatchProductList, dispatchCart}: AddToCartButtonProps) => {
   const handleClick = async () => {
     try {
       const {product, item} = await addCartItem({productId: newProduct._id});
-      setProductList(previousProductList => {
-        return previousProductList.map(previousProduct => {
-          return previousProduct._id === product._id
-          ? product
-          : previousProduct;
-        })
+      dispatchProductList({
+        type: "add to cart",
+        product: product
       });
-      setCart(previousCart => {
-        if (previousCart.find(prevCartItem => prevCartItem.productId === item.productId)) {
-          return previousCart.map(previousCartItem => {
-            return previousCartItem.productId === item.productId
-            ? item
-            : previousCartItem;
-          });
-        } else {
-          return previousCart.concat(item);
-        }
+      dispatchCart({
+        type: "add to cart",
+        cartItem: item
       });
     } catch (error: unknown) {
       console.log(error);
