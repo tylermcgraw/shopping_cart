@@ -200,3 +200,69 @@ table td.total {
   text-align: right;
   padding-top: 20px;
 }
+
+.product-listing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sort-by {
+  display: flex;
+  align-items: center;
+}
+
+.sort-by span {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sort-button {
+  margin-left: 5px;
+  background-color: #07575b;
+  color: white;
+  border: 1px solid #07575b;
+  border-radius: 4px;
+  padding: 5px 20px 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+.sort-button:hover {
+  background-color: #043a3d;
+}
+
+.sort-button.active {
+  background-color: #c4dfe6;
+  color: #07575b;
+  font-weight: bold;
+}
+
+.sort-button .arrow {
+  display: inline-block; /* Always display the arrow, but we'll control it via the parent */
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid white; /* Arrow pointing up */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sort-button.active {
+  background-color: #c4dfe6;
+  color: #07575b;
+  font-weight: bold;
+}
+
+.sort-button.active .arrow {
+  display: inline-block; /* Show arrow only on active button */
+  border-bottom-color: #07575b; /* Match arrow color to text color */
+}
+
+.sort-button .arrow.desc {
+  transform: translateY(-50%) rotate(180deg); /* Point arrow down for descending */
+}
