@@ -1,61 +1,120 @@
-# Shopping Cart App
+# Shopping Cart Application
 
-## Setup
+A full-stack e-commerce application featuring a dynamic product management system and a functional shopping cart. This project utilizes a **React** and **TypeScript** frontend with a **Node.js/Express** backend and **MongoDB** for persistent storage.
 
-1. Install [Node.js](https://nodejs.org/en/download/package-manager/) if you haven't already
-2. Clone this repository
-3. `cd` into the downloaded directory
-4. `cd` into server and run `npm install` from the command line to install all dependencies
+## 🚀 Features
 
-## DataBase Setup
+* **Product Management**: View a comprehensive list of products, add new items, edit existing product details, and remove products from the inventory.
+* **Shopping Cart**: Add products to the cart with real-time inventory updates—adding an item to the cart automatically reduces its shop quantity.
+* **Checkout Workflow**: Review carted items and perform a checkout to clear the cart.
+* **Responsive UI**: A clean, component-based interface built with React.
+* **Persistent Data**: All products and cart items are stored and managed via a MongoDB database.
+* **Robust Testing**: Comprehensive test suite using Vitest and React Testing Library for frontend components.
 
-1. Create mongoDB account - https://account.mongodb.com/account/register
-2. Create a free AWS cluster
-3. Go to `collections` (Browse Collections) and create a new database (shopping_cart) for example with two collections `products` and `cartitems`. Note: If you are going to work in pairs create two databases (for example team1_shopping and team2_shopping) and each database should have two collections `products` and `cartitems`.
-4. Under Security tab, click Database Access, and on the right `add new database user`. After you enter username and password, click `add user` at the bottom right corner.
-5. Under Security tab, click Network Access, and whitelist your IP address.
-6. Once your cluster is created, under Clusters tab, click connect and then MongoDB for VSCode and copy the connection string which will look something like this `mongodb+srv://test123:<password>@cluster0-zamyu.mongodb.net/`. Instead of `test123` there will be your username, and you will need to replace `<password>` with your password and `test` with the database name. You will have to put the name of your database after the connection string with some flags `mongodb+srv://test123:<password>@cluster0-zamyu.mongodb.net/<databaseName>?retryWrites=true&w=majority`. Change `<databaseName>` with the name of your database.
-7. Finally, inside your project folder, `cd` into server, create new file `.env` and enter `DB=<paste the string from above here>`. It will look similar to this `DB=mongodb+srv://test123:mypass@cluster0-zamyu.mongodb.net/shopping_cart?retryWrites=true&w=majority`.
+## 🛠️ Tech Stack
 
-## Viewing Static Version of the App
+### Frontend
+* **Framework**: React 19
+* **Language**: TypeScript
+* **Build Tool**: Vite
+* **Data Validation**: Zod
+* **HTTP Client**: Axios
+* **Testing**: Vitest, React Testing Library, JSDOM
 
-While developing the app, you can take a look at the static pages that you'll eventually convert into a dynamic application. To do so, visit `http://localhost:5001/ui` in the browser. You are also encouraged to read and reuse the markup, classes and ids used in these static files in your components. They're located in the `/server/public/ui` folder.
+### Backend
+* **Runtime**: Node.js
+* **Framework**: Express
+* **Database**: MongoDB with Mongoose ODM
+* **Environment Management**: Dotenv
 
-## Developing the app
+---
 
-The starting point of the application is the `/client/src/index.js` file. That's where the root component of the application - `App` - is rendered to the DOM. You can add new components to the `/client/src/components` folder and new test files to the `/client/src/tests` folder.
+## ⚙️ Getting Started
 
-For the initial application data, you can start with the following list of products:
+### Prerequisites
+* [Node.js](https://nodejs.org/en/download/) installed.
+* A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account for database hosting.
 
-```js
-[
-  {
-    id: 1,
-    title: "Amazon Kindle E-reader",
-    quantity: 5,
-    price: 79.99,
-  },
-  {
-    id: 2,
-    title: "Apple 10.5-Inch iPad Pro",
-    quantity: 3,
-    price: 649.99,
-  },
-  {
-    id: 3,
-    title: "Yamaha Portable Keyboard",
-    quantity: 2,
-    price: 155.99,
-  },
-  {
-    id: 4,
-    title: "Tinker, Tailor, Soldier, Spy - A John le Carre Novel",
-    quantity: 12,
-    price: 13.74,
-  },
-];
+### Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone [repository-url]
+    cd shopping_cart
+    ```
+
+2.  **Server Setup**:
+    ```bash
+    cd server
+    npm install
+    ```
+    * Create a `.env` file in the `/server` directory.
+    * Add your MongoDB connection string: `DB=mongodb+srv://<username>:<password>@cluster0.mongodb.net/shopping_cart?retryWrites=true&w=majority`.
+
+3.  **Client Setup**:
+    ```bash
+    cd ../client
+    npm install
+    ```
+
+---
+
+## 🏃 Usage
+
+### Running the Backend
+From the `/server` directory:
+* Standard start: `npm start`
+* Development mode with auto-reload: `npm run start-watch`
+The server will run on `http://localhost:5001`.
+
+### Running the Frontend
+From the `/client` directory:
+```bash
+npm run dev
 ```
+The application will be accessible via the URL provided by Vite (typically http://localhost:5173).
 
-## DOCS
+## 📡 API Endpoints
 
-You can find documentation in the `docs` folder in `api.md` file.
+The backend provides a RESTful API for managing products and the shopping cart.
+
+| Method | Endpoint            | Description                                       |
+| ------ | ------------------- | ------------------------------------------------- |
+| GET    | `/api/products`     | Retrieve all products from the database           |
+| POST   | `/api/products`     | Create a new product                              |
+| PUT    | `/api/products/:id` | Update an existing product's details              |
+| DELETE | `/api/products/:id` | Delete a product from the inventory               |
+| GET    | `/api/cart`         | Retrieve all items currently in the cart          |
+| POST   | `/api/add-to-cart`  | Add a product to the cart (reduces shop quantity) |
+| POST   | `/api/checkout`     | Process checkout and clear the shopping cart      |
+
+---
+
+## 🧪 Testing
+
+The frontend utilizes **Vitest** for unit and component testing.
+
+To run tests in the `/client` directory, use the following commands:
+
+* **Run tests once**:
+
+  ```bash
+  npm test
+  ```
+
+* **Run tests in watch mode**:
+
+  ```bash
+  npm run test:watch
+  ```
+
+---
+
+## 📂 Project Structure
+
+```
+/client              # React + TypeScript frontend application
+/server              # Express backend and MongoDB models
+/docs                # Detailed API documentation
+/server/public/ui    # Static HTML templates used as references for the dynamic UI
+```
